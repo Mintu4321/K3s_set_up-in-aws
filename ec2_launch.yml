@@ -7,6 +7,7 @@
     aws_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
     aws_secret_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
     aws_region: "us-east-2"
+    key_file_path: "/Users/tridibbasumatary/downloads/ubuntu1.pem"
   tasks:
     - name: Launch 3 EC2 instances
       amazon.aws.ec2_instance:
@@ -26,3 +27,11 @@
       debug:
         msg: "Instance {{ item.instance_id }} launched"
       loop: "{{ ec2.instances }}"
+
+
+    - name: Add new instances to inventory
+      add_host:
+          name: "{{ item.public_ip }}"
+          ansible_user: "my_instance" # Adjust based on the AMI used
+          ansible_ssh_private_key_file: "{{ key_file_path }}"
+          loop: "{{ ec2.instances }}"
