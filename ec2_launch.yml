@@ -7,7 +7,6 @@
     aws_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
     aws_secret_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
     aws_region: "us-east-2"
-    key_file_path: "/Users/tridibbasumatary/downloads/ubuntu1.pem"
   tasks:
     - name: Launch 3 EC2 instances
       amazon.aws.ec2_instance:
@@ -15,7 +14,7 @@
         key_name: "ubuntu1"
         instance_type: "t2.micro"
         image_id: "ami-0862be96e41dcbf74"  #our desired AMI ID
-        count: 3
+        count: 1
         region: "{{ aws_region }}"
         security_group: "default" # Replace with your security group ID
         wait: yes
@@ -23,31 +22,24 @@
         aws_secret_key: "{{ aws_secret_key }}"
       register: ec2
 
-    - name: Debug EC2 launch output
+    - name: Output instance information
       debug:
-        var: ec2
-
-    - name: Add new instances to inventory
-      add_host:
-        name: "{{ item.public_ip_address }}"
-        ansible_user: "ec2-user" # Adjust based on the AMI used
-        ansible_ssh_private_key_file: "{{ key_file_path }}"
+        msg: "Instance {{ item.instance_id }} launched"
       loop: "{{ ec2.instances }}"
-      loop_control:
-        label: "{{ item.id }}"
 
-- name: Install K3s on EC2 instances
-  hosts: all
-  become: yes
-  tasks:
-    - name: Update and install dependencies
-      ansible.builtin.yum:
-        name: "{{ item }}"
-        state: present
-      loop:
-        - curl
-        - tar
 
-    - name: Install K3s
-      shell: |
-        curl -sfL https://get.k3s.io | sh -
+#    - name: Install K3s on EC2 instances
+#      hosts: all
+#      become: yes
+#      tasks:
+#        - name: Update and install dependencies
+#          ansible.builtin.yum:
+#            name: "{{ item }}"
+#            state: present
+#          loop:
+#            - curl
+#            - tar
+#
+#    - name: Install K3s
+#      shell: |
+#        curl -sfL https://get.k3s.io | sh -
