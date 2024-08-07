@@ -23,15 +23,31 @@
         aws_secret_key: "{{ aws_secret_key }}"
       register: ec2
 
-    - name: Output instance information
+    - name: Debug EC2 launch output
       debug:
-        msg: "Instance {{ item.instance_id }} launched"
-      loop: "{{ ec2.instances }}"
-
+        var: ec2
 
     - name: Add new instances to inventory
       add_host:
-          name: "{{ item.public_ip }}"
-          ansible_user: "my_instance" # Adjust based on the AMI used
-          ansible_ssh_private_key_file: "{{ key_file_path }}"
-          loop: "{{ ec2.instances }}"
+        name: "{{ item.public_ip_address }}"
+        ansible_user: "ec2-user" # Adjust based on the AMI used
+        ansible_ssh_private_key_file: "{{ key_file_path }}"
+      loop: "{{ ec2.instances }}"
+      loop_control:
+        label: "{{ item.id }}"
+
+- name: Install K3s on EC2 instances
+  hosts: all
+  become: yes
+  tasks:
+    - name: Update and install dependencies
+      ansible.builtin.yum:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - curl
+        - tar
+
+    - name: Install K3s
+      shell: |
+        curl -sfL https://get.k3s.io | sh -
