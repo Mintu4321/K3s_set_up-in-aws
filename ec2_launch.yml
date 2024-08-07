@@ -24,5 +24,5 @@
 
     - name: Output instance information
       debug:
-        msg: "Instance {{ item.id }} launched in {{ item.region }}"
+        msg: "Instance {{ item.instance_id }} launched in {{ item.region }}"
       loop: "{{ ec2.instances }}"
