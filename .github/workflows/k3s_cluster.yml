@@ -28,7 +28,7 @@ jobs:
 
       - name: Run Ansible Playbook
         run: |
-          ansible-playbook k3s_install.yml
+          ansible-playbook k3_install.yml
 
 
       - name: Run kubernates command 
