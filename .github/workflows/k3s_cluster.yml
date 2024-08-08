@@ -51,6 +51,7 @@ jobs:
 
       - name: Deploy Helm Chart
         run: |
+          export KUBECONFIG=$HOME/.kube/config
           helm install myrelease ./mychart 
 
       
