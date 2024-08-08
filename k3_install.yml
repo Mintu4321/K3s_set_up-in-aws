@@ -45,4 +45,4 @@
 
     - name: Check NGINX ingress installation
       ansible.builtin.debug:
-        msg: "NGINX ingress installation"
+        msg: "NGINX ingress installation {{ k3s_installation.stdout }}"
