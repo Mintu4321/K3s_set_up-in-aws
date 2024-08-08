@@ -1,0 +1,25 @@
+---
+- name: Install k3s without Traefik and set up NGINX ingress controller
+  hosts: localhost
+  become: false
+
+  tasks:
+    - name: Install k3s without Traefik
+      ansible.builtin.shell:
+        cmd: curl -sfL https://get.k3s.io | sh -s - --disable=traefik
+      args:
+        creates: /usr/local/bin/k3s
+      register: k3s_installation
+
+    - name: Check k3s installation
+      ansible.builtin.debug:
+        msg: "k3s installation output: {{ k3s_installation.stdout }}"
+
+    - name: Install NGINX ingress controller
+      ansible.builtin.shell:
+        cmd: kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
+      register: nginx_installation
+
+    - name: Check NGINX ingress installation
+      ansible.builtin.debug:
+        msg: "NGINX ingress installation output: {{ nginx_installation.stdout }}"
