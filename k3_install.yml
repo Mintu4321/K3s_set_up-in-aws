@@ -21,7 +21,7 @@
       register: api_status
       until: api_status.rc == 0
       retries: 10
-      delay: 15
+      delay: 5
 
     - name: Install NGINX ingress controller
       ansible.builtin.shell:
