@@ -46,14 +46,14 @@ jobs:
           # helm install nginx-ingress ingress-nginx/ingress-nginx
           # helm install nginx-ingress ingress-nginx/ingress-nginx --namespace ingress-nginx --create-namespace
 
-      - name: Wait for NGINX Ingress controller to be ready
-        run: |
-          export KUBECONFIG=$HOME/.kube/config
-          echo "Waiting for NGINX Ingress controller to be ready..."
-          kubectl wait --namespace default \
-            --for=condition=ready pod \
-            --selector=app.kubernetes.io/component=controller \
-            --timeout=300s
+      # - name: Wait for NGINX Ingress controller to be ready
+      #   run: |
+      #     export KUBECONFIG=$HOME/.kube/config
+      #     echo "Waiting for NGINX Ingress controller to be ready..."
+      #     kubectl wait --namespace default \
+      #       --for=condition=ready pod \
+      #       --selector=app.kubernetes.io/component=controller \
+      #       --timeout=300s
 
       - name: Deploy Helm Chart
         run: |
