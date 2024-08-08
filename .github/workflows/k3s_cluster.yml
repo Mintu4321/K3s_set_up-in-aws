@@ -23,14 +23,14 @@ jobs:
       # - name: Run Ansible Playbook
       #   run: ansible-playbook k3_install.yml
 
-      - name: Set up kubectl
-        run: |
-          # mkdir -p $HOME/.kube
-          # sudo cp /etc/rancher/k3s/k3s.yaml $HOME/.kube/config
-          # sudo chown $USER:$USER $HOME/.kube/config
-          export KUBECONFIG=$HOME/.kube/config
-          kubectl create ns reddit-app
-          kubectl get nodes -n reddit-app
+      # - name: Set up kubectl
+      #   run: |
+      #     # mkdir -p $HOME/.kube
+      #     # sudo cp /etc/rancher/k3s/k3s.yaml $HOME/.kube/config
+      #     # sudo chown $USER:$USER $HOME/.kube/config
+      #     export KUBECONFIG=$HOME/.kube/config
+      #     kubectl create ns reddit-app
+      #     kubectl get nodes -n reddit-app
 
       # - name: Configure Ingress controller
       #   run: |
@@ -51,7 +51,8 @@ jobs:
 
       - name: Run kubernetes commands 
         run: |
-          export KUBECONFIG=$HOME/.kube/config
+          # export KUBECONFIG=$HOME/.kube/config
+          kubectl create ns reddit-app
           kubectl apply -f deployment.yml 
           kubectl apply -f ingress.yml 
           kubectl get all -o wide -n reddit-app
