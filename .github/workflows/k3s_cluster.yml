@@ -41,6 +41,7 @@ jobs:
           helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
           helm repo update
           helm install nginx-ingress ingress-nginx/ingress-nginx
+          sleep 5
           
 
       # - name: Set up SSH to EC2
@@ -58,7 +59,6 @@ jobs:
         run: |
 
           export KUBECONFIG=$HOME/.kube/config
-          kubectl create ns reddit-app
           kubectl apply -f deployment.yml 
           kubectl apply -f ingress.yml 
           kubectl get all -o wide -n reddit-app
