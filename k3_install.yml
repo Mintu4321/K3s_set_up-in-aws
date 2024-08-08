@@ -9,22 +9,22 @@
         cmd: curl -sfL https://get.k3s.io | sh -s - --disable=traefik
       register: k3s_installation
 
-    - name: Wait for k3s service to be active
-      ansible.builtin.shell:
-        cmd: |
-          until systemctl is-active --quiet k3s; do
-            echo "Waiting for k3s to be active..."
-            sleep 10
-          done
+    # - name: Wait for k3s service to be active
+    #   ansible.builtin.shell:
+    #     cmd: |
+    #       until systemctl is-active --quiet k3s; do
+    #         echo "Waiting for k3s to be active..."
+    #         sleep 10
+    #       done
 
-    - name: Wait for Kubernetes API to be ready
-      ansible.builtin.shell:
-        cmd: |
-          until kubectl get nodes; do
-            echo "Waiting for Kubernetes API..."
-            sleep 15
-          done
-      register: api_status
+    # - name: Wait for Kubernetes API to be ready
+    #   ansible.builtin.shell:
+    #     cmd: |
+    #       until kubectl get nodes; do
+    #         echo "Waiting for Kubernetes API..."
+    #         sleep 15
+    #       done
+    #   register: api_status
 
     - name: Install Helm
       ansible.builtin.shell:
@@ -45,4 +45,4 @@
 
     - name: Check NGINX ingress installation
       ansible.builtin.debug:
-        msg: "NGINX ingress installation output: {{ nginx_installation.stdout }}"
+        msg: "NGINX ingress installation"
