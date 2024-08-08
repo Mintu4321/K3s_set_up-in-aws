@@ -55,10 +55,13 @@ jobs:
         run: |
           export KUBECONFIG=$HOME/.kube/config
           helm install myrelease ./mychart 
+          sleep 10
 
       
       - name: Run kubernetes commands 
         run: |
+          
+          
           export KUBECONFIG=$HOME/.kube/config
           # kubectl create ns reddit-app
           # kubectl apply -f deployment.yml 
