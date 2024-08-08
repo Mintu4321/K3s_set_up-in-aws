@@ -68,5 +68,6 @@ jobs:
           # kubectl apply -f ingress.yml 
           kubectl get all -o wide 
           kubectl get ingress  -o wide
+          kubectl get ns -o wide
           
           kubectl get svc -o wide
