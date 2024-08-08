@@ -71,3 +71,4 @@ jobs:
           kubectl get ns -o wide
           
           kubectl get svc -o wide
+          curl chart-example.local
