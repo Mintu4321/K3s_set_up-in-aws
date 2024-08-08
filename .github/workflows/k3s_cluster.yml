@@ -32,7 +32,8 @@ jobs:
           sudo cp /etc/rancher/k3s/k3s.yaml $HOME/.kube/config
           sudo chown $USER:$USER $HOME/.kube/config
           export KUBECONFIG=$HOME/.kube/config
-          kubectl get nodes
+          kubectl create ns reddit-app
+          kubectl get nodes -n reddit-app
 
 
 
@@ -53,6 +54,6 @@ jobs:
           export KUBECONFIG=$HOME/.kube/config
           kubectl apply -f deployment.yml 
           kubectl apply -f ingress.yml 
-          kubectl get all -o wide 
+          kubectl get all -o wide -n reddit-app
 
           
