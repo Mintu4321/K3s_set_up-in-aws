@@ -26,6 +26,16 @@ jobs:
         run: ansible-playbook k3_install.yml
 
 
+      - name: Set up kubectl
+        run: |
+          mkdir -p $HOME/.kube
+          sudo cp /etc/rancher/k3s/k3s.yaml $HOME/.kube/config
+          sudo chown $USER:$USER $HOME/.kube/config
+          export KUBECONFIG=$HOME/.kube/config
+          kubectl get nodes
+
+
+
       # - name: Set up SSH to EC2
       #   uses: webfactory/ssh-agent@v0.5.3
       #   with:
@@ -39,6 +49,8 @@ jobs:
 
       - name: Run kubernates command 
         run: |
+
+          export KUBECONFIG=$HOME/.kube/config
           kubectl apply -f deployment.yml 
           kubectl apply -f ingress.yml 
           kubectl get all -o wide 
