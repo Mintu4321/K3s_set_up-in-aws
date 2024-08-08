@@ -39,7 +39,8 @@ jobs:
           curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
           helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
           helm repo update
-          helm install nginx-ingress ingress-nginx/ingress-nginx
+          # helm install nginx-ingress ingress-nginx/ingress-nginx
+          helm install nginx-ingress ingress-nginx/ingress-nginx --namespace ingress-nginx --create-namespace
 
       - name: Wait for NGINX Ingress controller to be ready
         run: |
@@ -65,4 +66,4 @@ jobs:
           kubectl get all -o wide 
           kubectl get ingress  -o wide
           
-          kubectl get svc -n reddit-app -o wide
+          kubectl get svc -o wide
