@@ -55,7 +55,7 @@ jobs:
         run: |
           export KUBECONFIG=$HOME/.kube/config
           helm install myrelease ./mychart 
-          sleep 10
+          sleep 60
 
       
       - name: Run kubernetes commands 
@@ -71,4 +71,4 @@ jobs:
           kubectl get ns -o wide
           
           kubectl get svc -o wide
-          curl chart-example.local
+          
