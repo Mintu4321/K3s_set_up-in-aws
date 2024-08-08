@@ -23,7 +23,7 @@ jobs:
           pip install ansible
 
       - name: Run Ansible Playbook
-        run: ansible-playbook playbook.yml
+        run: ansible-playbook k3_install.yml
 
 
       # - name: Set up SSH to EC2
@@ -31,10 +31,10 @@ jobs:
       #   with:
       #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Run Ansible Playbook
-        run: |
-          # ansible-playbook k3_install.yml
-          ansible-playbook -i "localhost," -c local k3_install.yml
+      # - name: Run Ansible Playbook
+      #   run: |
+      #     # ansible-playbook k3_install.yml
+      #     ansible-playbook -i "localhost," -c local k3_install.yml
 
 
       - name: Run kubernates command 
