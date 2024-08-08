@@ -26,22 +26,22 @@
     #       done
     #   register: api_status
 
-    - name: Install Helm
-      ansible.builtin.shell:
-        cmd: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+    # - name: Install Helm
+    #   ansible.builtin.shell:
+    #     cmd: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
-    - name: Add NGINX Ingress Helm repo
-      ansible.builtin.shell:
-        cmd: helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+    # - name: Add NGINX Ingress Helm repo
+    #   ansible.builtin.shell:
+    #     cmd: helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 
-    - name: Update Helm repos
-      ansible.builtin.shell:
-        cmd: helm repo update
+    # - name: Update Helm repos
+    #   ansible.builtin.shell:
+    #     cmd: helm repo update
 
-    - name: Install NGINX ingress controller via Helm
-      ansible.builtin.shell:
-        cmd: helm install nginx-ingress ingress-nginx/ingress-nginx
-      register: nginx_installation
+    # - name: Install NGINX ingress controller via Helm
+    #   ansible.builtin.shell:
+    #     cmd: helm install nginx-ingress ingress-nginx/ingress-nginx
+    #   register: nginx_installation
 
     - name: Check NGINX ingress installation
       ansible.builtin.debug:
