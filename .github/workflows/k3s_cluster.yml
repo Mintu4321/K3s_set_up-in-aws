@@ -28,7 +28,7 @@ jobs:
           # mkdir -p $HOME/.kube
           # sudo cp /etc/rancher/k3s/k3s.yaml $HOME/.kube/config
           # sudo chown $USER:$USER $HOME/.kube/config
-          # export KUBECONFIG=$HOME/.kube/config
+          export KUBECONFIG=$HOME/.kube/config
           kubectl create ns reddit-app
           kubectl get nodes -n reddit-app
 
