@@ -7,35 +7,18 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: "domain.com"
+  - host: domain.com
     http:
       paths:
-      - pathType: Prefix
-        path: "/test"
+      - path: /test
+        pathType: Prefix
         backend:
           service:
             name: reddit-clone-service
             port:
               number: 3000
-      - pathType: Prefix
-        path: "/nginx"
-        backend:
-          service:
-            name: nginx-app
-            port:
-              number: 80
-  - host: "*.domain.com"
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/test"
-        backend:
-          service:
-            name: reddit-clone-service
-            port:
-              number: 3000
-      - pathType: Prefix
-        path: "/nginx"
+      - path: /nginx
+        pathType: Prefix
         backend:
           service:
             name: nginx-app
