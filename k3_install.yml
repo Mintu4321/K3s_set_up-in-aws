@@ -7,37 +7,39 @@
     - name: Install k3s without Traefik
       ansible.builtin.shell:
         cmd: curl -sfL https://get.k3s.io | sh -s - --disable=traefik
-      args:
-        creates: /usr/local/bin/k3s
       register: k3s_installation
 
+    - name: Wait for k3s service to be active
+      ansible.builtin.shell:
+        cmd: |
+          until systemctl is-active --quiet k3s; do
+            echo "Waiting for k3s to be active..."
+            sleep 10
+          done
+
     - name: Wait for Kubernetes API to be ready
-      ansible.builtin.command:
-        cmd: kubectl get nodes
+      ansible.builtin.shell:
+        cmd: |
+          until kubectl get nodes; do
+            echo "Waiting for Kubernetes API..."
+            sleep 15
+          done
       register: api_status
-      until: api_status.rc == 0
-      retries: 10
-      delay: 3
 
     - name: Install Helm
       ansible.builtin.shell:
-        cmd: |
-          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-      args:
-        creates: /usr/local/bin/helm
+        cmd: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
     - name: Add NGINX Ingress Helm repo
-      ansible.builtin.command:
+      ansible.builtin.shell:
         cmd: helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-      register: add_repo
 
     - name: Update Helm repos
-      ansible.builtin.command:
+      ansible.builtin.shell:
         cmd: helm repo update
-      register: update_repo
 
     - name: Install NGINX ingress controller via Helm
-      ansible.builtin.command:
+      ansible.builtin.shell:
         cmd: helm install nginx-ingress ingress-nginx/ingress-nginx
       register: nginx_installation
 
