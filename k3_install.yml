@@ -1,7 +1,7 @@
 ---
 - name: Install k3s without Traefik and set up NGINX ingress controller
   hosts: localhost
-  become: false
+  become: yes
 
   tasks:
     - name: Install k3s without Traefik
@@ -14,6 +14,14 @@
     - name: Check k3s installation
       ansible.builtin.debug:
         msg: "k3s installation output: {{ k3s_installation.stdout }}"
+
+    - name: Wait for Kubernetes API to be ready
+      ansible.builtin.command:
+        cmd: kubectl get nodes
+      register: api_status
+      until: api_status.rc == 0
+      retries: 10
+      delay: 15
 
     - name: Install NGINX ingress controller
       ansible.builtin.shell:
