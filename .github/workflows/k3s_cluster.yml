@@ -15,39 +15,39 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install Ansible
-        run: |
-          python -m pip install --upgrade pip
-          pip install ansible
+      # - name: Install Ansible
+      #   run: |
+      #     python -m pip install --upgrade pip
+      #     pip install ansible
 
-      - name: Run Ansible Playbook
-        run: ansible-playbook k3_install.yml
+      # - name: Run Ansible Playbook
+      #   run: ansible-playbook k3_install.yml
 
       - name: Set up kubectl
         run: |
-          mkdir -p $HOME/.kube
-          sudo cp /etc/rancher/k3s/k3s.yaml $HOME/.kube/config
-          sudo chown $USER:$USER $HOME/.kube/config
-          export KUBECONFIG=$HOME/.kube/config
+          # mkdir -p $HOME/.kube
+          # sudo cp /etc/rancher/k3s/k3s.yaml $HOME/.kube/config
+          # sudo chown $USER:$USER $HOME/.kube/config
+          # export KUBECONFIG=$HOME/.kube/config
           kubectl create ns reddit-app
           kubectl get nodes -n reddit-app
 
-      - name: Configure Ingress controller
-        run: |
-          export KUBECONFIG=$HOME/.kube/config
-          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-          helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-          helm repo update
-          helm install nginx-ingress ingress-nginx/ingress-nginx
+      # - name: Configure Ingress controller
+      #   run: |
+      #     export KUBECONFIG=$HOME/.kube/config
+      #     curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+      #     helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+      #     helm repo update
+      #     helm install nginx-ingress ingress-nginx/ingress-nginx
 
-      - name: Wait for NGINX Ingress controller to be ready
-        run: |
-          export KUBECONFIG=$HOME/.kube/config
-          echo "Waiting for NGINX Ingress controller to be ready..."
-          kubectl wait --namespace default \
-            --for=condition=ready pod \
-            --selector=app.kubernetes.io/component=controller \
-            --timeout=300s
+      # - name: Wait for NGINX Ingress controller to be ready
+      #   run: |
+      #     export KUBECONFIG=$HOME/.kube/config
+      #     echo "Waiting for NGINX Ingress controller to be ready..."
+      #     kubectl wait --namespace default \
+      #       --for=condition=ready pod \
+      #       --selector=app.kubernetes.io/component=controller \
+      #       --timeout=300s
 
       - name: Run kubernetes commands 
         run: |
