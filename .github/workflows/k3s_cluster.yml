@@ -36,9 +36,9 @@ jobs:
       - name: Configure Ingress controller    
         run: |
           export KUBECONFIG=$HOME/.kube/config
-          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-          # sudo apt install snapd
-          # sudo snap install helm --classic
+          # curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+          sudo apt install snapd
+          sudo snap install helm --classic
 
 
           # helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
