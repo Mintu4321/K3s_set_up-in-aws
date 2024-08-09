@@ -98,6 +98,9 @@ jobs:
         run: |
           RUNNER_IP=$(curl -s ifconfig.me)
           echo "Public IP of the GitHub Runner: $RUNNER_IP:30000"
+          echo "Forwarding local port 80 to service port $NODE_PORT"    
+          # Run kubectl port-forward in the background
+          kubectl port-forward svc/myrelease-mychart 80:$NODE_PORT &
 
       - name: Wait for Service to be Available
         run: |
