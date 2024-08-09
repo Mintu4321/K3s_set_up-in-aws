@@ -72,4 +72,12 @@ jobs:
           # kubectl get ingress  -o wide
           kubectl get ns -o wide     
           kubectl get svc -o wide
+
+
+      - name:  Curl the output 
+        run: |
+          curl chart-example.local/hello
+          curl chart-example.local
+        
+    
           
