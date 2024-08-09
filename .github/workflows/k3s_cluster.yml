@@ -50,7 +50,7 @@ jobs:
         run: |
           export KUBECONFIG=$HOME/.kube/config
           echo "Waiting for NGINX Ingress controller to be ready..."
-          kubectl wait --namespace default \
+          kubectl wait --namespace  ingress-nginx\
             --for=condition=ready pod \
             --selector=app.kubernetes.io/component=controller \
             --timeout=300s
