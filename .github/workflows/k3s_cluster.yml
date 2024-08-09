@@ -78,8 +78,10 @@ jobs:
         run: |
           export KUBECONFIG=$HOME/.kube/config
           NODE_PORT=$(kubectl get svc myrelease-mychart -o jsonpath='{.spec.ports[0].nodePort}')
+          NODE_IP=$(kubectl get nodes -o jsonpath='{.items[0].status.addresses[0].address}')
           echo "NodePort for myrelease-mychart service: $NODE_PORT"
-          echo "You can access the service at http://<NODE_IP>:$NODE_PORT"
+          echo "Testing service at http://$NODE_IP:$NODE_PORT"
+          curl -s -o /dev/null -w "%{http_code}" http://$NODE_IP:$NODE_PORT
 
       - name: Wait for Service to be Available
         run: |
