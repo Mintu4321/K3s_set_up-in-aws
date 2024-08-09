@@ -1,12 +1,20 @@
+# Use the official Python image from the Docker Hub
+FROM python:3.9-slim
 
-FROM node:19-alpine3.15
+# Set the working directory in the container
+WORKDIR /app
 
-WORKDIR /reddit-clone
+# Copy the requirements file into the container
+COPY requirements.txt .
 
-COPY . /reddit-clone
+# Install the dependencies specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-RUN npm install 
+# Copy the rest of the application code into the container
+COPY . .
 
-EXPOSE 3000
+# Expose port 5000 to the host
+EXPOSE 80
 
-CMD ["npm","run","dev"]
+# Command to run the application
+CMD ["python3", "main.py"]
