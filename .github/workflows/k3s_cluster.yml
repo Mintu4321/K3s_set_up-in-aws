@@ -82,9 +82,15 @@ jobs:
           echo "NodePort for myrelease-mychart service: $NODE_PORT"
           echo "Testing service at http://$NODE_IP:$NODE_PORT"
           curl -s -o /dev/null -w "%{http_code}" http://$NODE_IP:$NODE_PORT
+
+          echo "Testing /hello endpoint"
           curl http://$NODE_IP:$NODE_PORT/hello
+
+          echo "Testing /health endpoint"
           curl http://$NODE_IP:$NODE_PORT/health
+          echo "Testing /readiness endpoint"
           curl http://$NODE_IP:$NODE_PORT/readiness
+          echo "Testing root / endpoint"
           curl http://$NODE_IP:$NODE_PORT
         
 
