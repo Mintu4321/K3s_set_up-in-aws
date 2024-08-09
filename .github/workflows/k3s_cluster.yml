@@ -74,10 +74,18 @@ jobs:
           kubectl get svc -o wide
 
 
-      - name:  Curl the output 
+      - name: Expose Service
         run: |
-          curl chart-example.local/hello
-          curl chart-example.local
-        
+          export KUBECONFIG=$HOME/.kube/config
+          NODE_PORT=$(kubectl get svc myrelease-mychart -o jsonpath='{.spec.ports[0].nodePort}')
+          echo "NodePort for myrelease-mychart service: $NODE_PORT"
+          echo "You can access the service at http://<NODE_IP>:$NODE_PORT"
+
+      - name: Wait for Service to be Available
+        run: |
+          echo "Waiting for service to be available..."
+          sleep 60
+          
+          
     
           
