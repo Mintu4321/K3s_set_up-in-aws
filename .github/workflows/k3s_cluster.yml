@@ -92,12 +92,17 @@ jobs:
           curl http://$NODE_IP:$NODE_PORT/readiness
           echo "Testing root / endpoint"
           curl http://$NODE_IP:$NODE_PORT
-        
+
+
+      - name: Get GitHub Runner Public IP
+        run: |
+          RUNNER_IP=$(curl -s ifconfig.me)
+          echo "Public IP of the GitHub Runner: $RUNNER_IP:30000"
 
       - name: Wait for Service to be Available
         run: |
           echo "Waiting for service to be available..."
-          sleep 60
+          sleep 120
           
           
     
