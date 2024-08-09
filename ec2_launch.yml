@@ -10,9 +10,9 @@
   tasks:
     - name: Launch 3 EC2 instances
       amazon.aws.ec2_instance:
-        name: "my_instance"
+        name: "ubuntu"
         key_name: "ubuntu1"
-        instance_type: "t2.micro"
+        instance_type: "t2.medium"
         image_id: "ami-0862be96e41dcbf74"  #our desired AMI ID
         count: 1
         region: "{{ aws_region }}"
